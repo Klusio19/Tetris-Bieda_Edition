@@ -1,6 +1,6 @@
 #include "ActiveFigure.h"
 
-// Konstruktor tworz¹cy losow¹ figurê w pozycji (BOARD_WIDTH / 2, 0)
+// Konstruktor tworz¹cy losow¹ figurê
 ActiveFigure::ActiveFigure()
 {
     // Losujemy kolor figury
@@ -59,7 +59,7 @@ ActiveFigure::ActiveFigure()
     }
 
     // Ustawiamy pozycjê pocz¹tkow¹ figury
-    m_x = BOARD_WIDTH / 2;
+    m_x = int(12 + 10/2);
     m_y = 0;
 }
 
@@ -112,7 +112,7 @@ bool ActiveFigure::canMove(int x, int y, const std::vector<Block>& fixedBlocks)
     {
         int newX = m_x + i.getX() + x;
         int newY = m_y + i.getY() + y;
-        if (newX < 0 || newX >= BOARD_WIDTH || newY >= BOARD_HEIGHT) return false;
+        if (newX < 12 || newX >= 12 + BOARD_WIDTH || newY >= BOARD_HEIGHT) return false;
         for (Block fixedBlock : fixedBlocks)
         {
             if (newX == fixedBlock.getX() && newY == fixedBlock.getY()) return false;
