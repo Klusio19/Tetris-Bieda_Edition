@@ -6,8 +6,15 @@ ActiveFigure::ActiveFigure()
     // Losujemy kolor figury
     sf::Color color = sf::Color(rand() % 256, rand() % 256, rand() % 256);
     // Losujemy kszta³t figury
-
-    shape = rand() % 7;
+    if (difficultyChoice == 1)
+    {
+        shape = rand() % 8;
+    }
+    else
+    {
+        shape = rand() % 7;
+    }
+    
     if (shape == 0) // Kszta³t "L"
     {
         m_blocks.emplace_back(0, 0, color);
@@ -55,6 +62,10 @@ ActiveFigure::ActiveFigure()
         m_blocks.emplace_back(-1, 1, color);
         m_blocks.emplace_back(0, 1, color);
         m_blocks.emplace_back(1, 1, color);
+        m_blocks.emplace_back(0, 0, color);
+    }
+    else if (shape == 7) //Pojednynczy klocek
+    {
         m_blocks.emplace_back(0, 0, color);
     }
 

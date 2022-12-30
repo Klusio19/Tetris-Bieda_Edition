@@ -20,3 +20,6 @@ extern float WINDOW_HEIGHT;
 //Wspó³rzêdna X, dla której t³o(bia³y prostok¹t) wyrysuje siê na œrodku ekranu.
 //Zale¿na od rozmiaru okna oraz wielkoœci klocka.
 extern float CENTER;
+
+
+extern int difficultyChoice;

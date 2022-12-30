@@ -8,8 +8,8 @@ class Game
 {
 private:
 
-	sf::Font open_sans;
-	sf::RenderWindow window;
+	sf::Font techno_font;
+	sf::RenderWindow gameWindow;
 	sf::Event event;
 	sf::Clock clock;
 
@@ -20,10 +20,11 @@ private:
 	float currentTime;
 	float previousTime;
 
-	int points;
+	int points = 0;
+	
 
 	//Inicjowanie wartoœci
-	void initValues();
+	void initValues(int diffChoice);
 
 	//Obs³uga zdarzeñ (naciœniêæ przycisków na klawiaturze, przycisku "X" na oknie)
 	void eventPolling();
@@ -37,6 +38,9 @@ private:
 	//G³ówna pêtla otwartego okna
 	void openWindow();
 
+	friend ActiveFigure;
 public:
+	void menuSetup();
 	void run();
+	int getDifficultyChoice();
 };
