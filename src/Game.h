@@ -7,13 +7,13 @@
 class Game
 {
 private:
-
 	sf::Font techno_font;
 	sf::RenderWindow gameWindow;
 	sf::Event event;
 	sf::Clock clock;
 
 	ActiveFigure activeFigure;
+	Figure nextFigure;
 
 	std::vector<Block> fixedFigures;
 
@@ -21,26 +21,24 @@ private:
 	float previousTime;
 
 	int points = 0;
-	
 
-	//Inicjowanie wartoœci
+	// Inicjowanie wartoœci
 	void initValues(int diffChoice);
 
-	//Obs³uga zdarzeñ (naciœniêæ przycisków na klawiaturze, przycisku "X" na oknie)
+	// Obs³uga zdarzeñ (naciœniêæ przycisków na klawiaturze, przycisku "X" na oknie)
 	void eventPolling();
 
-	//Aktualizacja stanu gry
+	// Aktualizacja stanu gry
 	void updateGameLogic();
 
-	//Wyœwietlanie
+	// Wyœwietlanie
 	void render();
 
-	//G³ówna pêtla otwartego okna
+	// G³ówna pêtla otwartego okna
 	void openWindow();
 
-	friend ActiveFigure;
-public:
 	void menuSetup();
+public:
 	void run();
 	int getDifficultyChoice();
 };

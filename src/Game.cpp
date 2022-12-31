@@ -23,6 +23,13 @@ float CENTER;
 
 int difficultyChoice = 0;
 
+void Game::run()
+{
+    menuSetup();
+    initValues(difficultyChoice);
+    openWindow();
+}
+
 void Game::initValues(int diffChoice)
 {
     switch (diffChoice)
@@ -59,7 +66,7 @@ void Game::initValues(int diffChoice)
     currentTime = 0.0f;
     previousTime = 0.0f;
     points = 0;
-
+    nextFigure.initFigure();
 }
 
 void Game::eventPolling()
@@ -155,8 +162,12 @@ void Game::updateGameLogic()
                 }
             }
 
-            // Tworzymy nowy spadaj¹cy klocek
-            activeFigure = ActiveFigure();
+            
+            // Tworzymy nowy spadaj¹cy klocek, oraz klocek kolejny
+            
+            //nextFigure.setFigurePosition(24, 4);
+            activeFigure = ActiveFigure(difficultyChoice, nextFigure.getShape(), nextFigure.getColor());
+            nextFigure.initFigure();
             if (difficultyChoice == 3)
             {
                 int rotateChance = -1;
@@ -171,37 +182,31 @@ void Game::updateGameLogic()
 
 void Game::render()
 {
-    // Rysowanie planszy gry
     gameWindow.clear();
 
-    //Bia³e t³o
-    sf::RectangleShape whiteBackground(sf::Vector2f(BOARD_WIDTH * BLOCK_SIZE, BOARD_HEIGHT * BLOCK_SIZE));
-    whiteBackground.setPosition(12 * BLOCK_SIZE, 0);
-    whiteBackground.setFillColor(sf::Color::White);
-    gameWindow.draw(whiteBackground);
+    // Rysowanie ca³ego t³a
+    sf::RectangleShape backgroundRectangle(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+    backgroundRectangle.setPosition(0, 0);
+    backgroundRectangle.setFillColor(sf::Color(153, 204, 255));
+    gameWindow.draw(backgroundRectangle);
 
-    //Kolorowe boki
-    //lewy
-    sf::RectangleShape colorSide(sf::Vector2f(12 * BLOCK_SIZE, WINDOW_HEIGHT));
-    colorSide.setPosition(0, 0);
-    colorSide.setFillColor(sf::Color(153, 204, 255));
-    gameWindow.draw(colorSide);
-    //prawy
-    colorSide.setSize(sf::Vector2f(14 * BLOCK_SIZE, WINDOW_HEIGHT));
-    colorSide.setPosition(22 * BLOCK_SIZE, 0);
-    gameWindow.draw(colorSide);
+    // Rysowanie bia³ego t³a, planszy do gry
+    sf::RectangleShape whiteBackgroundBoard(sf::Vector2f(BOARD_WIDTH * BLOCK_SIZE, BOARD_HEIGHT * BLOCK_SIZE));
+    whiteBackgroundBoard.setPosition(12 * BLOCK_SIZE, 0);
+    whiteBackgroundBoard.setFillColor(sf::Color::White);
+    gameWindow.draw(whiteBackgroundBoard);
 
-    //Linie
+    // Rysowanie linii
     for (int i = 0; i <= BOARD_WIDTH; i++)
     {
         for (int j = 0; j < BOARD_HEIGHT; j++)
         {
-            //Linie poziome
+            // Linie poziome
             sf::RectangleShape horizontalLines(sf::Vector2f(BLOCK_SIZE * BOARD_WIDTH, 1.0f));
             horizontalLines.setPosition(12 * BLOCK_SIZE, float(j * BLOCK_SIZE));
             horizontalLines.setFillColor(sf::Color::Black);
 
-            //Linie pionowe
+            // Linie pionowe
             sf::RectangleShape verticalLines(sf::Vector2f(BLOCK_SIZE * BOARD_HEIGHT, 1.0f));
             verticalLines.rotate(90);
             verticalLines.setPosition((12 * BLOCK_SIZE) + BLOCK_SIZE * i, 0.0f);
@@ -210,18 +215,19 @@ void Game::render()
             gameWindow.draw(verticalLines);
             gameWindow.draw(horizontalLines);
         }
+
     }
 
-    //Rysowanie tekstu z punktami
+    // Rysowanie tekstu z punktami
     sf::Text pointsNumber;
     pointsNumber.setFont(techno_font);
     std::string s_points = "Points:\n     " + std::to_string(points);
     pointsNumber.setString(s_points);
-    pointsNumber.setPosition(CENTER / 2 - 200, WINDOW_HEIGHT / 2 - 100);
+    pointsNumber.setPosition(CENTER / 2 - 200, WINDOW_HEIGHT / 2 + 100);
     pointsNumber.setCharacterSize(100);
     pointsNumber.setFillColor(sf::Color::Red);
     gameWindow.draw(pointsNumber);
-    pointsNumber.setPosition((WINDOW_WIDTH) / 2 + (BOARD_WIDTH * BLOCK_SIZE) / 2 + 200, (WINDOW_HEIGHT / 2) - 100);
+    pointsNumber.setPosition((WINDOW_WIDTH) / 2 + (BOARD_WIDTH * BLOCK_SIZE) / 2 + 200, (WINDOW_HEIGHT / 2 + 100));
     gameWindow.draw(pointsNumber);
 
     // Rysowanie klocków pozostaj¹cych na planszy
@@ -237,6 +243,80 @@ void Game::render()
     {
         sf::RectangleShape rectangle(sf::Vector2f(BLOCK_SIZE, BLOCK_SIZE));
         rectangle.setPosition(float((activeFigure.getX() + block.getX()) * BLOCK_SIZE), float((activeFigure.getY() + block.getY()) * BLOCK_SIZE));
+        rectangle.setFillColor(block.getColor());
+        gameWindow.draw(rectangle);
+    }
+
+
+    // Rysowanie t³a dla klocka, który pojawi siê jako kolejny
+    sf::RectangleShape nextShapeBackground(sf::Vector2f(5 * BLOCK_SIZE, 5 * BLOCK_SIZE));
+    nextShapeBackground.setFillColor(sf::Color::White);
+
+    //Lewe t³o
+    nextShapeBackground.setPosition(3 * BLOCK_SIZE, 3 * BLOCK_SIZE);
+    gameWindow.draw(nextShapeBackground);
+    // Linie
+    for (int i = 0; i <= 5; i++)
+    {
+        for (int j = 0; j <= 5; j++)
+        {
+            // Linie poziome
+            sf::RectangleShape horizontalLines(sf::Vector2f(BLOCK_SIZE * 5, 1.0f));
+            horizontalLines.setPosition(3 * BLOCK_SIZE, float(3 * BLOCK_SIZE + j * BLOCK_SIZE));
+            horizontalLines.setFillColor(sf::Color::Black);
+
+            // Linie pionowe
+            sf::RectangleShape verticalLines(sf::Vector2f(BLOCK_SIZE * 5, 1.0f));
+            verticalLines.rotate(90);
+            verticalLines.setPosition((3 * BLOCK_SIZE) + BLOCK_SIZE * i, 3 * BLOCK_SIZE);
+            verticalLines.setFillColor(sf::Color::Black);
+
+            gameWindow.draw(verticalLines);
+            gameWindow.draw(horizontalLines);
+        }
+
+    }
+
+    // Prawe t³o
+    nextShapeBackground.setPosition(27 * BLOCK_SIZE, 3 * BLOCK_SIZE);
+    gameWindow.draw(nextShapeBackground);
+    // Linie
+    for (int i = 0; i <= 5; i++)
+    {
+        for (int j = 0; j <= 5; j++)
+        {
+            // Linie poziome
+            sf::RectangleShape horizontalLines(sf::Vector2f(BLOCK_SIZE * 5, 1.0f));
+            horizontalLines.setPosition(27 * BLOCK_SIZE, float(3 * BLOCK_SIZE + j * BLOCK_SIZE));
+            horizontalLines.setFillColor(sf::Color::Black);
+
+            // Linie pionowe
+            sf::RectangleShape verticalLines(sf::Vector2f(BLOCK_SIZE * 5, 1.0f));
+            verticalLines.rotate(90);
+            verticalLines.setPosition((27 * BLOCK_SIZE) + BLOCK_SIZE * i, 3 * BLOCK_SIZE);
+            verticalLines.setFillColor(sf::Color::Black);
+
+            gameWindow.draw(verticalLines);
+            gameWindow.draw(horizontalLines);
+        }
+
+    }
+
+
+    // Rysowanie klocka który pojawi siê jako kolejny
+    for (Block block : nextFigure.getFigureBlocks())
+    {
+        sf::RectangleShape rectangle(sf::Vector2f(BLOCK_SIZE, BLOCK_SIZE));
+        rectangle.setPosition((3 + 2) * BLOCK_SIZE + block.getX() * BLOCK_SIZE, (3 + 2) * BLOCK_SIZE + block.getY() * BLOCK_SIZE);
+        rectangle.setFillColor(block.getColor());
+        gameWindow.draw(rectangle);
+    }
+
+    // Rysowanie klocka który pojawi siê jako kolejny
+    for (Block block : nextFigure.getFigureBlocks())
+    {
+        sf::RectangleShape rectangle(sf::Vector2f(BLOCK_SIZE, BLOCK_SIZE));
+        rectangle.setPosition((27 + 2) * BLOCK_SIZE + block.getX() * BLOCK_SIZE, (3 + 2) * BLOCK_SIZE + block.getY() * BLOCK_SIZE);
         rectangle.setFillColor(block.getColor());
         gameWindow.draw(rectangle);
     }
@@ -363,13 +443,6 @@ void Game::menuSetup()
     {
         exit(0);
     }
-}
-
-void Game::run()
-{
-    menuSetup();
-    initValues(difficultyChoice);
-    openWindow();
 }
 
 int Game::getDifficultyChoice()
