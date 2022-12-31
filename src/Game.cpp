@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Font.h"
 
 //Wymiary planszy do gry (w klockach)
 float BOARD_WIDTH;
@@ -336,7 +337,8 @@ void Game::menuSetup()
 {
     sf::RenderWindow menuWindow(sf::VideoMode(unsigned int(1280), unsigned int(720)), "Tetris Bieda Edition Menu", sf::Style::Close);
 
-    techno_font.loadFromFile("Dependencies\\Fonts\\Techno.otf");
+    //techno_font.loadFromFile("Dependencies\\Fonts\\Techno.otf");
+    techno_font.loadFromMemory(&Techno_otf, Techno_otf_len);
 
     while (menuWindow.isOpen())
     {
