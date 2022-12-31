@@ -8,7 +8,7 @@ private:
 	sf::Color figureColor;
 protected:
 	std::vector<Block> m_blocks;
-	int shape = -1;
+	int figureShape = -1;
 	int m_x, m_y;
 	
 public:

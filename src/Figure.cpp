@@ -14,63 +14,63 @@ void Figure::initFigure()
     // Losujemy kszta速 figury
     if (difficultyChoice == 1)
     {
-        shape = rand() % 8;
+        figureShape = rand() % 8;
     }
     else
     {
-        shape = rand() % 7;
+        figureShape = rand() % 7;
     }
 
-    if (shape == 0) // Kszta速 "L"
+    if (figureShape == 0) // Kszta速 "L"
     {
         m_blocks.emplace_back(0, 0, figureColor);
         m_blocks.emplace_back(0, 1, figureColor);
         m_blocks.emplace_back(0, 2, figureColor);
         m_blocks.emplace_back(1, 2, figureColor);
     }
-    else if (shape == 1) // Kszta速 "J"
+    else if (figureShape == 1) // Kszta速 "J"
     {
         m_blocks.emplace_back(0, 0, figureColor);
         m_blocks.emplace_back(0, 1, figureColor);
         m_blocks.emplace_back(0, 2, figureColor);
         m_blocks.emplace_back(-1, 2, figureColor);
     }
-    else if (shape == 2) // Kszta速 "I"
+    else if (figureShape == 2) // Kszta速 "I"
     {
         m_blocks.emplace_back(-1, 0, figureColor);
         m_blocks.emplace_back(0, 0, figureColor);
         m_blocks.emplace_back(1, 0, figureColor);
         m_blocks.emplace_back(2, 0, figureColor);
     }
-    else if (shape == 3) // Kszta速 "O"
+    else if (figureShape == 3) // Kszta速 "O"
     {
         m_blocks.emplace_back(0, 0, figureColor);
         m_blocks.emplace_back(0, 1, figureColor);
         m_blocks.emplace_back(1, 0, figureColor);
         m_blocks.emplace_back(1, 1, figureColor);
     }
-    else if (shape == 4) // Kszta速 "S"
+    else if (figureShape == 4) // Kszta速 "S"
     {
         m_blocks.emplace_back(-1, 0, figureColor);
         m_blocks.emplace_back(0, 0, figureColor);
         m_blocks.emplace_back(0, 1, figureColor);
         m_blocks.emplace_back(1, 1, figureColor);
     }
-    else if (shape == 5) // Kszta速 "Z"
+    else if (figureShape == 5) // Kszta速 "Z"
     {
         m_blocks.emplace_back(-1, 1, figureColor);
         m_blocks.emplace_back(0, 1, figureColor);
         m_blocks.emplace_back(0, 0, figureColor);
         m_blocks.emplace_back(1, 0, figureColor);
     }
-    else if (shape == 6) // Kszta速 "T"
+    else if (figureShape == 6) // Kszta速 "T"
     {
         m_blocks.emplace_back(-1, 1, figureColor);
         m_blocks.emplace_back(0, 1, figureColor);
         m_blocks.emplace_back(1, 1, figureColor);
         m_blocks.emplace_back(0, 0, figureColor);
     }
-    else if (shape == 7) //Pojednynczy klocek
+    else if (figureShape == 7) //Pojednynczy klocek
     {
         m_blocks.emplace_back(0, 0, figureColor);
     }
@@ -93,7 +93,7 @@ int Figure::getY() const
 
 int Figure::getShape()
 {
-    return shape;
+    return figureShape;
 }
 
 sf::Color Figure::getColor()

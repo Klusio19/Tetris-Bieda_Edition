@@ -61,7 +61,7 @@ void Game::initValues(int diffChoice)
 
     CENTER = (WINDOW_WIDTH / 2) - (BOARD_WIDTH * BLOCK_SIZE / 2);
 
-    gameWindow.create(sf::VideoMode(unsigned int(WINDOW_WIDTH), unsigned int(WINDOW_HEIGHT)), "Tetris Bieda Edition", sf::Style::Fullscreen);
+    gameWindow.create(sf::VideoMode(unsigned int(WINDOW_WIDTH), unsigned int(WINDOW_HEIGHT)), "Tetris Bieda Edition", sf::Style::Default);
     currentTime = 0.0f;
     previousTime = 0.0f;
     points = 0;
@@ -95,12 +95,12 @@ void Game::eventPolling()
             if (event.key.code == sf::Keyboard::Q)
             {
                 if (difficultyChoice == 3) return;
-                activeFigure.rotateClockwise();
+                if (activeFigure.canRotateClockwise(fixedFigures)) activeFigure.rotateClockwise();
             }
             if (event.key.code == sf::Keyboard::E)
             {
                 if (difficultyChoice == 3) return;
-                activeFigure.rotateCounterclockwise();
+                if (activeFigure.canRotateCounterclockwise(fixedFigures)) activeFigure.rotateCounterclockwise();
             }
         }
     };

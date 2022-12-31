@@ -5,68 +5,68 @@ ActiveFigure::ActiveFigure(int difLevel, int setShape, sf::Color setColor)
 	sf::Color currentColor = sf::Color(rand() % 256, rand() % 256, rand() % 256);
 	sf::Color nextColor = setColor;
 
-    int nextShape = Figure::shape;
+    //int nextActiveFigureShape = Figure::figureShape;
 
     // Losujemy kszta³t figury
     if (difLevel == 1)
     {
-        shape = setShape;
+        activeFigureShape = setShape;
     }
     else
     {
-        shape = setShape;
+        activeFigureShape = setShape;
     }
 
-    if (shape == 0) // Kszta³t "L"
+    if (activeFigureShape == 0) // Kszta³t "L"
     {
         m_blocks.emplace_back(0, 0, nextColor);
         m_blocks.emplace_back(0, 1, nextColor);
         m_blocks.emplace_back(0, 2, nextColor);
         m_blocks.emplace_back(1, 2, nextColor);
     }
-    else if (shape == 1) // Kszta³t "J"
+    else if (activeFigureShape == 1) // Kszta³t "J"
     {
         m_blocks.emplace_back(0, 0, nextColor);
         m_blocks.emplace_back(0, 1, nextColor);
         m_blocks.emplace_back(0, 2, nextColor);
         m_blocks.emplace_back(-1, 2, nextColor);
     }
-    else if (shape == 2) // Kszta³t "I"
+    else if (activeFigureShape == 2) // Kszta³t "I"
     {
         m_blocks.emplace_back(-1, 0, nextColor);
         m_blocks.emplace_back(0, 0, nextColor);
         m_blocks.emplace_back(1, 0, nextColor);
         m_blocks.emplace_back(2, 0, nextColor);
     }
-    else if (shape == 3) // Kszta³t "O"
+    else if (activeFigureShape == 3) // Kszta³t "O"
     {
         m_blocks.emplace_back(0, 0, nextColor);
         m_blocks.emplace_back(0, 1, nextColor);
         m_blocks.emplace_back(1, 0, nextColor);
         m_blocks.emplace_back(1, 1, nextColor);
     }
-    else if (shape == 4) // Kszta³t "S"
+    else if (activeFigureShape == 4) // Kszta³t "S"
     {
         m_blocks.emplace_back(-1, 0, nextColor);
         m_blocks.emplace_back(0, 0, nextColor);
         m_blocks.emplace_back(0, 1, nextColor);
         m_blocks.emplace_back(1, 1, nextColor);
     }
-    else if (shape == 5) // Kszta³t "Z"
+    else if (activeFigureShape == 5) // Kszta³t "Z"
     {
         m_blocks.emplace_back(-1, 1, nextColor);
         m_blocks.emplace_back(0, 1, nextColor);
         m_blocks.emplace_back(0, 0, nextColor);
         m_blocks.emplace_back(1, 0, nextColor);
     }
-    else if (shape == 6) // Kszta³t "T"
+    else if (activeFigureShape == 6) // Kszta³t "T"
     {
         m_blocks.emplace_back(-1, 1, nextColor);
         m_blocks.emplace_back(0, 1, nextColor);
         m_blocks.emplace_back(1, 1, nextColor);
         m_blocks.emplace_back(0, 0, nextColor);
     }
-    else if (shape == 7) //Pojednynczy klocek
+    else if (activeFigureShape == 7) //Pojednynczy klocek
     {
         m_blocks.emplace_back(0, 0, nextColor);
     }
@@ -81,9 +81,34 @@ std::vector<Block> ActiveFigure::getBlocks() const
     return m_blocks;
 }
 
+bool ActiveFigure::canRotateClockwise(const std::vector<Block>& fixedFigures)
+{
+    if (activeFigureShape == 3) return false;
+
+    ActiveFigure tempFigure = *this;
+    tempFigure.rotateClockwise();
+
+    // pêtla for która sprawdzi kolizjê z granicami planszy
+    for (Block& block : tempFigure.m_blocks)
+    {
+        if (tempFigure.m_x + block.getX() < 12 || tempFigure.m_x + block.getX() > 11 + BOARD_WIDTH || tempFigure.m_y + block.getY() > BOARD_HEIGHT) return false;
+    }
+
+    // pêtla for która sprawdzi kolizjê z innymi klockami
+    for (Block block : fixedFigures)
+    {
+        for (Block tempBlock : tempFigure.m_blocks)
+        {
+            if (tempFigure.m_x + tempBlock.getX() == block.getX() && tempFigure.m_y + tempBlock.getY() == block.getY()) return false;
+        }
+    }
+
+    return true;
+}
+
 void ActiveFigure::rotateClockwise()
 {
-    if (shape == 3) return; // je¿eli kszta³t to kwadrat to nie obracamy
+    if (activeFigureShape == 3) return; // je¿eli kszta³t to kwadrat to nie obracamy
     for (Block& block : m_blocks)
     {
         int temp = block.getX();
@@ -92,9 +117,34 @@ void ActiveFigure::rotateClockwise()
     }
 }
 
+bool ActiveFigure::canRotateCounterclockwise(const std::vector<Block>& fixedFigures)
+{
+    if (activeFigureShape == 3) return false;
+
+    ActiveFigure tempFigure = *this;
+    tempFigure.rotateCounterclockwise();
+
+    // pêtla for która sprawdzi kolizjê z granicami planszy
+    for (Block& block : tempFigure.m_blocks)
+    {
+        if (tempFigure.m_x + block.getX() < 12 || tempFigure.m_x + block.getX() > 11 + BOARD_WIDTH || tempFigure.m_y + block.getY() > BOARD_HEIGHT) return false;
+    }
+
+    // pêtla for która sprawdzi kolizjê z innymi klockami
+    for (Block block : fixedFigures)
+    {
+        for (Block tempBlock : tempFigure.m_blocks)
+        {
+            if (tempFigure.m_x + tempBlock.getX() == block.getX() && tempFigure.m_y + tempBlock.getY() == block.getY()) return false;
+        }
+    }
+
+    return true;
+}
+
 void ActiveFigure::rotateCounterclockwise()
 {
-    if (shape == 3) return; // je¿eli kszta³t to kwadrat to nie obracamy
+    if (activeFigureShape == 3) return; // je¿eli kszta³t to kwadrat to nie obracamy
     for (Block& block : m_blocks)
     {
         int temp = block.getX();
@@ -110,9 +160,9 @@ bool ActiveFigure::canMove(int x, int y, const std::vector<Block>& fixedFigures)
         int newX = m_x + i.getX() + x;
         int newY = m_y + i.getY() + y;
         if (newX < 12 || newX >= 12 + BOARD_WIDTH || newY >= BOARD_HEIGHT) return false;
-        for (Block fixedBlock : fixedFigures)
+        for (Block block : fixedFigures)
         {
-            if (newX == fixedBlock.getX() && newY == fixedBlock.getY()) return false;
+            if (newX == block.getX() && newY == block.getY()) return false;
         }
     }
     return true;
