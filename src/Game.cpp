@@ -59,7 +59,6 @@ void Game::initValues(int diffChoice)
     WINDOW_HEIGHT = 1080.0f;
 
     CENTER = (WINDOW_WIDTH / 2) - (BOARD_WIDTH * BLOCK_SIZE / 2);
-    techno_font.loadFromFile("Dependencies\\Fonts\\Techno.otf");
 
     gameWindow.create(sf::VideoMode(unsigned int(WINDOW_WIDTH), unsigned int(WINDOW_HEIGHT)), "Tetris Bieda Edition", sf::Style::Fullscreen);
     currentTime = 0.0f;
@@ -119,7 +118,6 @@ void Game::updateGameLogic()
             if (activeFigure.getY() == 0)
             {
                 Game::endGame();
-                //clock.restart();
             }
             // Jeœli klocek nie mo¿e opaœæ, dodajemy go do wektora  klocków pozostaj¹cych na planszy
             for (Block& a : activeFigure.getBlocks())
@@ -164,6 +162,8 @@ void Game::updateGameLogic()
 
             
             // Tworzymy nowy spadaj¹cy klocek, oraz klocek kolejny
+            
+            //nextFigure.setFigurePosition(24, 4);
             activeFigure = ActiveFigure(difficultyChoice, nextFigure.getShape(), nextFigure.getColor());
             nextFigure.initFigure();
             if (difficultyChoice == 3)
@@ -217,16 +217,16 @@ void Game::render()
     }
 
     // Rysowanie tekstu z punktami
-    sf::Text pointsNumberText;
-    pointsNumberText.setFont(techno_font);
-    std::string pointsString = "Points:\n     " + std::to_string(points);
-    pointsNumberText.setString(pointsString);
-    pointsNumberText.setPosition(CENTER / 2 - 200, WINDOW_HEIGHT / 2 + 100);
-    pointsNumberText.setCharacterSize(100);
-    pointsNumberText.setFillColor(sf::Color::Red);
-    gameWindow.draw(pointsNumberText);
-    pointsNumberText.setPosition((WINDOW_WIDTH) / 2 + (BOARD_WIDTH * BLOCK_SIZE) / 2 + 200, (WINDOW_HEIGHT / 2 + 100));
-    gameWindow.draw(pointsNumberText);
+    sf::Text pointsNumber;
+    pointsNumber.setFont(techno_font);
+    std::string s_points = "Points:\n     " + std::to_string(points);
+    pointsNumber.setString(s_points);
+    pointsNumber.setPosition(CENTER / 2 - 200, WINDOW_HEIGHT / 2 + 100);
+    pointsNumber.setCharacterSize(100);
+    pointsNumber.setFillColor(sf::Color::Red);
+    gameWindow.draw(pointsNumber);
+    pointsNumber.setPosition((WINDOW_WIDTH) / 2 + (BOARD_WIDTH * BLOCK_SIZE) / 2 + 200, (WINDOW_HEIGHT / 2 + 100));
+    gameWindow.draw(pointsNumber);
 
     // Rysowanie klocków pozostaj¹cych na planszy
     for (Block block : fixedFigures)
@@ -335,9 +335,8 @@ void Game::openWindow()
 void Game::menuSetup()
 {
     sf::RenderWindow menuWindow(sf::VideoMode(unsigned int(1280), unsigned int(720)), "Tetris Bieda Edition Menu", sf::Style::Close);
-    sf::Font open_sans;
-    open_sans.loadFromFile("Dependencies\\Fonts\\OpenSans-Medium.ttf");
 
+    techno_font.loadFromFile("Dependencies\\Fonts\\Techno.otf");
 
     while (menuWindow.isOpen())
     {
@@ -384,44 +383,44 @@ void Game::menuSetup()
         sf::Text description3;
         sf::Text chooseDifText;
 
-        chooseDifText.setFont(open_sans);
+        chooseDifText.setFont(techno_font);
         chooseDifText.setString("    Choose your difficulty, by\npressing the keyboard button!");
         chooseDifText.setPosition(300, 50);
         chooseDifText.setFillColor(sf::Color::Red);
         chooseDifText.setCharacterSize(50);
 
-        option1.setFont(open_sans);
-        option1.setString("   1\nEASY");
-        option1.setPosition(150, 300);
+        option1.setFont(techno_font);
+        option1.setString("     1\nEASY");
+        option1.setPosition(175, 300);
         option1.setFillColor(sf::Color::Red);
         option1.setCharacterSize(50);
 
-        description1.setFont(open_sans);
-        description1.setString("Figures fall slowly,\nyou can rotate them\nand you can sometimes\nget bonus figure, which\nis single block!");
+        description1.setFont(techno_font);
+        description1.setString("    Figures fall slowly,\n  you can rotate them\nand you can sometimes\n get bonus figure, which\n         is single block!");
         description1.setPosition(100, 500);
         description1.setFillColor(sf::Color::Red);
         description1.setCharacterSize(25);
 
-        option2.setFont(open_sans);
+        option2.setFont(techno_font);
         option2.setString("       2\nNORMAL");
-        option2.setPosition(525, 300);
+        option2.setPosition(550, 300);
         option2.setFillColor(sf::Color::Red);
         option2.setCharacterSize(50);
 
-        description2.setFont(open_sans);
-        description2.setString("Figures fall normally\nand you can rotate them!");
+        description2.setFont(techno_font);
+        description2.setString("     Figures fall normally\nand you can rotate them!");
         description2.setPosition(500, 500);
         description2.setFillColor(sf::Color::Red);
         description2.setCharacterSize(25);
 
-        option3.setFont(open_sans);
-        option3.setString("    3\nHARD");
+        option3.setFont(techno_font);
+        option3.setString("     3\nHARD");
         option3.setPosition(1000, 300);
         option3.setFillColor(sf::Color::Red);
         option3.setCharacterSize(50);
 
-        description3.setFont(open_sans);
-        description3.setString("Figures fall very fast\nand you can't rotate them!");
+        description3.setFont(techno_font);
+        description3.setString("      Figures fall very fast\nand you can't rotate them!");
         description3.setPosition(925, 500);
         description3.setFillColor(sf::Color::Red);
         description3.setCharacterSize(25);
@@ -448,9 +447,10 @@ void Game::endGame()
     gameWindow.close();
     sf::RenderWindow endWindow(sf::VideoMode(unsigned int(WINDOW_WIDTH), unsigned int(WINDOW_HEIGHT)), "Tetris Bieda Edition", sf::Style::Fullscreen);
 
+    sf::Event endEvent;
     while (endWindow.isOpen())
     {
-        sf::Event endEvent;
+        
 
         while (endWindow.pollEvent(endEvent))
         {
