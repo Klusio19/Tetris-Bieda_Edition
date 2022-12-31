@@ -23,17 +23,17 @@ void Figure::initFigure()
 
     if (figureShape == 0) // Kszta速 "L"
     {
+        m_blocks.emplace_back(0, -1, figureColor);
         m_blocks.emplace_back(0, 0, figureColor);
         m_blocks.emplace_back(0, 1, figureColor);
-        m_blocks.emplace_back(0, 2, figureColor);
-        m_blocks.emplace_back(1, 2, figureColor);
+        m_blocks.emplace_back(1, 1, figureColor);
     }
     else if (figureShape == 1) // Kszta速 "J"
     {
+        m_blocks.emplace_back(0, -1, figureColor);
         m_blocks.emplace_back(0, 0, figureColor);
         m_blocks.emplace_back(0, 1, figureColor);
-        m_blocks.emplace_back(0, 2, figureColor);
-        m_blocks.emplace_back(-1, 2, figureColor);
+        m_blocks.emplace_back(-1, 1, figureColor);
     }
     else if (figureShape == 2) // Kszta速 "I"
     {
@@ -65,10 +65,10 @@ void Figure::initFigure()
     }
     else if (figureShape == 6) // Kszta速 "T"
     {
-        m_blocks.emplace_back(-1, 1, figureColor);
-        m_blocks.emplace_back(0, 1, figureColor);
-        m_blocks.emplace_back(1, 1, figureColor);
+        m_blocks.emplace_back(-1, 0, figureColor);
         m_blocks.emplace_back(0, 0, figureColor);
+        m_blocks.emplace_back(1, 0, figureColor);
+        m_blocks.emplace_back(0, -1, figureColor);
     }
     else if (figureShape == 7) //Pojednynczy klocek
     {

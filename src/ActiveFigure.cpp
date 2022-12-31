@@ -19,17 +19,17 @@ ActiveFigure::ActiveFigure(int difLevel, int setShape, sf::Color setColor)
 
     if (activeFigureShape == 0) // Kszta速 "L"
     {
+        m_blocks.emplace_back(0, -1, nextColor);
         m_blocks.emplace_back(0, 0, nextColor);
         m_blocks.emplace_back(0, 1, nextColor);
-        m_blocks.emplace_back(0, 2, nextColor);
-        m_blocks.emplace_back(1, 2, nextColor);
+        m_blocks.emplace_back(1, 1, nextColor);
     }
     else if (activeFigureShape == 1) // Kszta速 "J"
     {
+        m_blocks.emplace_back(0, -1, nextColor);
         m_blocks.emplace_back(0, 0, nextColor);
         m_blocks.emplace_back(0, 1, nextColor);
-        m_blocks.emplace_back(0, 2, nextColor);
-        m_blocks.emplace_back(-1, 2, nextColor);
+        m_blocks.emplace_back(-1, 1, nextColor);
     }
     else if (activeFigureShape == 2) // Kszta速 "I"
     {
@@ -61,10 +61,10 @@ ActiveFigure::ActiveFigure(int difLevel, int setShape, sf::Color setColor)
     }
     else if (activeFigureShape == 6) // Kszta速 "T"
     {
-        m_blocks.emplace_back(-1, 1, nextColor);
-        m_blocks.emplace_back(0, 1, nextColor);
-        m_blocks.emplace_back(1, 1, nextColor);
+        m_blocks.emplace_back(-1, 0, nextColor);
         m_blocks.emplace_back(0, 0, nextColor);
+        m_blocks.emplace_back(1, 0, nextColor);
+        m_blocks.emplace_back(0, -1, nextColor);
     }
     else if (activeFigureShape == 7) //Pojednynczy klocek
     {
