@@ -60,9 +60,8 @@ void Game::initValues(int diffChoice)
 
     CENTER = (WINDOW_WIDTH / 2) - (BOARD_WIDTH * BLOCK_SIZE / 2);
     techno_font.loadFromFile("Dependencies\\Fonts\\Techno.otf");
-    //techno_font.loadFromFile("Dependencies\\Fonts\\OpenSans-Medium.ttf");
 
-    gameWindow.create(sf::VideoMode(unsigned int(WINDOW_WIDTH), unsigned int(WINDOW_HEIGHT)), "Tetris Bieda Edition", sf::Style::Default);
+    gameWindow.create(sf::VideoMode(unsigned int(WINDOW_WIDTH), unsigned int(WINDOW_HEIGHT)), "Tetris Bieda Edition", sf::Style::Fullscreen);
     currentTime = 0.0f;
     previousTime = 0.0f;
     points = 0;
@@ -119,7 +118,8 @@ void Game::updateGameLogic()
             //Zakoñczenie gry
             if (activeFigure.getY() == 0)
             {
-                clock.restart();
+                Game::endGame();
+                //clock.restart();
             }
             // Jeœli klocek nie mo¿e opaœæ, dodajemy go do wektora  klocków pozostaj¹cych na planszy
             for (Block& a : activeFigure.getBlocks())
@@ -164,8 +164,6 @@ void Game::updateGameLogic()
 
             
             // Tworzymy nowy spadaj¹cy klocek, oraz klocek kolejny
-            
-            //nextFigure.setFigurePosition(24, 4);
             activeFigure = ActiveFigure(difficultyChoice, nextFigure.getShape(), nextFigure.getColor());
             nextFigure.initFigure();
             if (difficultyChoice == 3)
@@ -219,16 +217,16 @@ void Game::render()
     }
 
     // Rysowanie tekstu z punktami
-    sf::Text pointsNumber;
-    pointsNumber.setFont(techno_font);
-    std::string s_points = "Points:\n     " + std::to_string(points);
-    pointsNumber.setString(s_points);
-    pointsNumber.setPosition(CENTER / 2 - 200, WINDOW_HEIGHT / 2 + 100);
-    pointsNumber.setCharacterSize(100);
-    pointsNumber.setFillColor(sf::Color::Red);
-    gameWindow.draw(pointsNumber);
-    pointsNumber.setPosition((WINDOW_WIDTH) / 2 + (BOARD_WIDTH * BLOCK_SIZE) / 2 + 200, (WINDOW_HEIGHT / 2 + 100));
-    gameWindow.draw(pointsNumber);
+    sf::Text pointsNumberText;
+    pointsNumberText.setFont(techno_font);
+    std::string pointsString = "Points:\n     " + std::to_string(points);
+    pointsNumberText.setString(pointsString);
+    pointsNumberText.setPosition(CENTER / 2 - 200, WINDOW_HEIGHT / 2 + 100);
+    pointsNumberText.setCharacterSize(100);
+    pointsNumberText.setFillColor(sf::Color::Red);
+    gameWindow.draw(pointsNumberText);
+    pointsNumberText.setPosition((WINDOW_WIDTH) / 2 + (BOARD_WIDTH * BLOCK_SIZE) / 2 + 200, (WINDOW_HEIGHT / 2 + 100));
+    gameWindow.draw(pointsNumberText);
 
     // Rysowanie klocków pozostaj¹cych na planszy
     for (Block block : fixedFigures)
@@ -445,7 +443,37 @@ void Game::menuSetup()
     }
 }
 
-int Game::getDifficultyChoice()
+void Game::endGame()
 {
-    return difficultyChoice;
+    gameWindow.close();
+    sf::RenderWindow endWindow(sf::VideoMode(unsigned int(WINDOW_WIDTH), unsigned int(WINDOW_HEIGHT)), "Tetris Bieda Edition", sf::Style::Fullscreen);
+
+    while (endWindow.isOpen())
+    {
+        sf::Event endEvent;
+
+        while (endWindow.pollEvent(endEvent))
+        {
+            if (endEvent.type == sf::Event::KeyPressed)
+            {
+                if (endEvent.key.code == sf::Keyboard::Escape)
+                {
+                    endWindow.close();
+                }
+            }
+        }
+
+        endWindow.clear(sf::Color(153, 204, 255));
+
+        sf::Text gameOverText;
+        std::string gameOverString = "GAME OVER! YOU GAINED " + std::to_string(points) + " POINTS !\n           PRESS ESC KEY TO EXIT!";
+        gameOverText.setFont(techno_font);
+        gameOverText.setString(gameOverString);
+        gameOverText.setPosition(120, 400);
+        gameOverText.setFillColor(sf::Color::Red);
+        gameOverText.setCharacterSize(115);
+        endWindow.draw(gameOverText);
+
+        endWindow.display();
+    }
 }

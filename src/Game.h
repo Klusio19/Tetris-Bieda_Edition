@@ -37,8 +37,12 @@ private:
 	// G³ówna pêtla otwartego okna
 	void openWindow();
 
+	// Otworzenie pierwszego okna z wyborem poziomu trudnoœæi
 	void menuSetup();
+
+	// Zakoñczenie gry
+	void endGame();
+
 public:
 	void run();
-	int getDifficultyChoice();
 };
