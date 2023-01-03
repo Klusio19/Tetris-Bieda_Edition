@@ -21,6 +21,7 @@ public:
 
 	// Funkcja sprawdzaj¹ca czy mo¿na obróciæ figurê o 90° przeciwnie do ruchu wskazówek zegara
 	bool canRotateCounterclockwise(const std::vector<Block>& fixedFigures);
+
 	// Funkcja obracaj¹ca figurê o 90° przeciwnie do ruchu wskazówek zegara
 	// Ka¿dy punkt (x,y) staje siê punktem (-y, x)
 	void rotateCounterclockwise();

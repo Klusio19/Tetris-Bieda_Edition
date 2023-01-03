@@ -49,7 +49,7 @@ void Game::initValues(int diffChoice)
 
     case 3:
     {
-        FALL_SPEED = 0.2f;
+        FALL_SPEED = 0.1f;
         break;
     }
     }
@@ -61,7 +61,7 @@ void Game::initValues(int diffChoice)
 
     CENTER = (WINDOW_WIDTH / 2) - (BOARD_WIDTH * BLOCK_SIZE / 2);
 
-    gameWindow.create(sf::VideoMode(unsigned int(WINDOW_WIDTH), unsigned int(WINDOW_HEIGHT)), "Tetris Bieda Edition", sf::Style::Default);
+    gameWindow.create(sf::VideoMode(unsigned int(WINDOW_WIDTH), unsigned int(WINDOW_HEIGHT)), "Tetris Bieda Edition", sf::Style::Fullscreen);
     currentTime = 0.0f;
     previousTime = 0.0f;
     points = 0;
