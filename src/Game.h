@@ -42,6 +42,9 @@ private:
 
 	// Zakoñczenie gry
 	void endGame();
+
+	// Wyœwietlenie sterowania
+	void displayControls();
 public:
 	void run();
 };

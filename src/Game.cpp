@@ -26,6 +26,7 @@ int difficultyChoice = 0;
 
 void Game::run()
 {
+    displayControls();
     menuSetup();
     initValues(difficultyChoice);
     openWindow();
@@ -189,6 +190,7 @@ void Game::render()
     backgroundRectangle.setFillColor(sf::Color(153, 204, 255));
     gameWindow.draw(backgroundRectangle);
 
+
     // Rysowanie bia³ego t³a, planszy do gry
     sf::RectangleShape whiteBackgroundBoard(sf::Vector2f(BOARD_WIDTH * BLOCK_SIZE, BOARD_HEIGHT * BLOCK_SIZE));
     whiteBackgroundBoard.setPosition(12 * BLOCK_SIZE, 0);
@@ -338,7 +340,7 @@ void Game::menuSetup()
     sf::RenderWindow menuWindow(sf::VideoMode(unsigned int(1280), unsigned int(720)), "Tetris Bieda Edition Menu", sf::Style::Close);
 
     //techno_font.loadFromFile("Dependencies\\Fonts\\Techno.otf");
-    techno_font.loadFromMemory(&Techno_otf, Techno_otf_len);
+    //techno_font.loadFromMemory(&Techno_otf, Techno_otf_len);
 
     while (menuWindow.isOpen())
     {
@@ -452,8 +454,6 @@ void Game::endGame()
     sf::Event endEvent;
     while (endWindow.isOpen())
     {
-        
-
         while (endWindow.pollEvent(endEvent))
         {
             if (endEvent.type == sf::Event::KeyPressed)
@@ -478,4 +478,57 @@ void Game::endGame()
 
         endWindow.display();
     }
+}
+
+void Game::displayControls()
+{
+    techno_font.loadFromMemory(&Techno_otf, Techno_otf_len);
+
+    sf::RenderWindow controlsWindow(sf::VideoMode(unsigned int(1280), unsigned int(720)), "Tetris Bieda Edition Controls", sf::Style::Close);
+    
+    sf::Event controlsEvent;
+
+    sf::Text controlsText;
+    controlsText.setFont(techno_font);
+    controlsText.setString("Use arrow keys to move, Q and E keys to rotate\n the figure. Remember, you can't rotate figures\n                                 in the hard mode!\n                       Press ENTER to continue...");
+    controlsText.setPosition(sf::Vector2f(30, 200));
+    controlsText.setFillColor(sf::Color::Red);
+    controlsText.setCharacterSize(60);
+
+    while (controlsWindow.isOpen())
+    {
+        while (controlsWindow.pollEvent(controlsEvent))
+        {
+            if (controlsEvent.type == sf::Event::Closed)
+            {
+                exit(0);
+            }
+            if (controlsEvent.type == sf::Event::KeyPressed)
+            {
+                if (controlsEvent.key.code == sf::Keyboard::Enter)
+                {
+                    controlsWindow.close();
+                }
+                if (controlsEvent.key.code == sf::Keyboard::Escape)
+                {
+                    exit(0);
+                }
+            }
+        }
+
+
+        
+
+
+
+        controlsWindow.clear(sf::Color(153, 204, 255));
+        controlsWindow.draw(controlsText);
+        controlsWindow.display();
+
+        
+
+
+    }
+
+    controlsWindow.close();
 }
