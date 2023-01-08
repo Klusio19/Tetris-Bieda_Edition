@@ -2,21 +2,21 @@
 #include "Font.h"
 
 //Wymiary planszy do gry (w klockach)
-float BOARD_WIDTH;
+const float BOARD_WIDTH = 10.0f;
 // Wymiary planszy do gry (w klockach)
-float BOARD_HEIGHT;
+const float BOARD_HEIGHT = 20.0f;
 
 // Wymiary pojedynczego klocka
-float BLOCK_SIZE;
+const float BLOCK_SIZE = 54.0f;
 
 // Prêdkoœæ spadania klocka, wiêksza wartoœæ - wolniejsze spadanie
 float FALL_SPEED;
 
 // Wymiary ca³ego okna
-float WINDOW_WIDTH;
+const float WINDOW_WIDTH = 1980.0f;
 
 // Wymiary ca³ego okna
-float WINDOW_HEIGHT;
+const float WINDOW_HEIGHT = 1080.0f;
 
 //Wspó³rzêdna X, dla której t³o(bia³y prostok¹t) wyrysuje siê na œrodku ekranu.
 //Zale¿na od rozmiaru okna oraz wielkoœci klocka.
@@ -36,29 +36,24 @@ void Game::initValues(int diffChoice)
 {
     switch (diffChoice)
     {
-    case 1:
-    {
-        FALL_SPEED = 1.0f;
-        break;
+        case 1:
+        {
+            FALL_SPEED = 0.5f;
+            break;
+        }
+        
+        case 2:
+        {
+            FALL_SPEED = 0.3f;
+            break;
+        }
+        
+        case 3:
+        {
+            FALL_SPEED = 0.1f;
+            break;
+        }
     }
-
-    case 2:
-    {
-        FALL_SPEED = 0.4f;
-        break;
-    }
-
-    case 3:
-    {
-        FALL_SPEED = 0.1f;
-        break;
-    }
-    }
-    BOARD_WIDTH = 10.0f;
-    BOARD_HEIGHT = 20.0f;
-    BLOCK_SIZE = 54.0f;
-    WINDOW_WIDTH = 1920.0f;
-    WINDOW_HEIGHT = 1080.0f;
 
     CENTER = (WINDOW_WIDTH / 2) - (BOARD_WIDTH * BLOCK_SIZE / 2);
 
