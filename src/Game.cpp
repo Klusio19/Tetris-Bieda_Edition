@@ -67,33 +67,33 @@ void Game::initValues(int diffChoice)
 void Game::eventPolling()
 {
     // Obs³uga naciœniêæ klawiszy
-    while (gameWindow.pollEvent(event))
+    while (gameWindow.pollEvent(mainWindowEvent))
     {
-        if (event.type == sf::Event::Closed) gameWindow.close();
-        if (event.type == sf::Event::KeyPressed)
+        if (mainWindowEvent.type == sf::Event::Closed) gameWindow.close();
+        if (mainWindowEvent.type == sf::Event::KeyPressed)
         {
-            if (event.key.code == sf::Keyboard::Escape)
+            if (mainWindowEvent.key.code == sf::Keyboard::Escape)
             {
                 gameWindow.close();
             }
-            if (event.key.code == sf::Keyboard::Left)
+            if (mainWindowEvent.key.code == sf::Keyboard::Left)
             {
                 if (activeFigure.canMove(-1, 0, fixedFigures)) activeFigure.move(-1, 0);
             }
-            if (event.key.code == sf::Keyboard::Right)
+            if (mainWindowEvent.key.code == sf::Keyboard::Right)
             {
                 if (activeFigure.canMove(1, 0, fixedFigures)) activeFigure.move(1, 0);
             }
-            if (event.key.code == sf::Keyboard::Down)
+            if (mainWindowEvent.key.code == sf::Keyboard::Down)
             {
                 if (activeFigure.canMove(0, 1, fixedFigures)) activeFigure.move(0, 1);
             }
-            if (event.key.code == sf::Keyboard::Q)
+            if (mainWindowEvent.key.code == sf::Keyboard::Q)
             {
                 if (difficultyChoice == 3) return;
                 if (activeFigure.canRotateClockwise(fixedFigures)) activeFigure.rotateClockwise();
             }
-            if (event.key.code == sf::Keyboard::E)
+            if (mainWindowEvent.key.code == sf::Keyboard::E)
             {
                 if (difficultyChoice == 3) return;
                 if (activeFigure.canRotateCounterclockwise(fixedFigures)) activeFigure.rotateCounterclockwise();

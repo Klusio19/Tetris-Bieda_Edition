@@ -9,7 +9,7 @@ class Game
 private:
 	sf::Font techno_font;
 	sf::RenderWindow gameWindow;
-	sf::Event event;
+	sf::Event mainWindowEvent;
 	sf::Clock clock;
 
 	ActiveFigure activeFigure;
