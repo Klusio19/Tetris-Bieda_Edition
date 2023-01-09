@@ -477,6 +477,9 @@ void Game::endGame()
 
 void Game::displayControls()
 {
+    srand(unsigned int(time(0)));
+
+
     techno_font.loadFromMemory(&Techno_otf, Techno_otf_len);
 
     sf::RenderWindow controlsWindow(sf::VideoMode(unsigned int(1280), unsigned int(720)), "Tetris Bieda Edition Controls", sf::Style::Close);
