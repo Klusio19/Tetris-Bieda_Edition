@@ -1,21 +1,12 @@
 #include "ActiveFigure.h"
 
-ActiveFigure::ActiveFigure(int difLevel, int setShape, sf::Color setColor)
+ActiveFigure::ActiveFigure(int setShape, sf::Color setColor)
 {
 	sf::Color currentColor = sf::Color(rand() % 256, rand() % 256, rand() % 256);
 	sf::Color nextColor = setColor;
 
-    //int nextActiveFigureShape = Figure::figureShape;
-
     // Losujemy kszta³t figury
-    if (difLevel == 1)
-    {
-        activeFigureShape = setShape;
-    }
-    else
-    {
-        activeFigureShape = setShape;
-    }
+    activeFigureShape = setShape;
 
     if (activeFigureShape == 0) // Kszta³t "L"
     {

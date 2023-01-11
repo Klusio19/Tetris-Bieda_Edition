@@ -158,10 +158,8 @@ void Game::updateGameLogic()
             }
 
             
-            // Tworzymy nowy spadaj¹cy klocek, oraz klocek kolejny
-            
-            //nextFigure.setFigurePosition(24, 4);
-            activeFigure = ActiveFigure(difficultyChoice, nextFigure.getShape(), nextFigure.getColor());
+            // Tworzymy now¹ spadaj¹c¹ figurê, oraz figurê kolejn¹
+            activeFigure = ActiveFigure(nextFigure.getShape(), nextFigure.getColor());
             nextFigure.initFigure();
             if (difficultyChoice == 3)
             {
@@ -184,7 +182,6 @@ void Game::render()
     backgroundRectangle.setPosition(0, 0);
     backgroundRectangle.setFillColor(sf::Color(153, 204, 255));
     gameWindow.draw(backgroundRectangle);
-
 
     // Rysowanie bia³ego t³a, planszy do gry
     sf::RectangleShape whiteBackgroundBoard(sf::Vector2f(BOARD_WIDTH * BLOCK_SIZE, BOARD_HEIGHT * BLOCK_SIZE));

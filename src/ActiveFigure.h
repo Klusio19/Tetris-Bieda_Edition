@@ -8,7 +8,7 @@ private:
 public:
 
 	//Konstruktor tworz¹cy losow¹ figurê
-	ActiveFigure(int difLevel = 2, int setShape = rand() % 7, sf::Color setColor = sf::Color(rand() % 256, rand() % 256, rand() % 256));
+	ActiveFigure(int setShape = rand() % 7, sf::Color setColor = sf::Color(rand() % 256, rand() % 256, rand() % 256));
 
 	std::vector<Block> getBlocks() const;
 
