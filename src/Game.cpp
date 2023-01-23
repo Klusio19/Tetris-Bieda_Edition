@@ -29,7 +29,17 @@ void Game::run()
     displayControls();
     menuSetup();
     initValues(difficultyChoice);
-    openWindow();
+    openMainWindow();
+}
+
+void Game::openMainWindow()
+{
+    while (gameWindow.isOpen())
+    {
+        eventPolling();
+        updateGameLogic();
+        render();
+    }
 }
 
 void Game::initValues(int diffChoice)
@@ -116,8 +126,8 @@ void Game::updateGameLogic()
             {
                 Game::endGame();
             }
-            // Jeœli klocek nie mo¿e opaœæ, dodajemy go do wektora  klocków pozostaj¹cych na planszy
-            for (Block& a : activeFigure.getBlocks())
+            // Jeœli klocek nie mo¿e opaœæ, dodajemy go do wektora klocków pozostaj¹cych na planszy
+            for (Block& a : activeFigure.getBlocks()) 
             {
                 fixedFigures.emplace_back(activeFigure.getX() + a.getX(), activeFigure.getY() + a.getY(), a.getColor());
             }
@@ -317,26 +327,15 @@ void Game::render()
     gameWindow.display();
 }
 
-void Game::openWindow()
-{
-    while (gameWindow.isOpen())
-    {
-        eventPolling();
-        updateGameLogic();
-        render();
-    }
-}
-
 void Game::menuSetup()
 {
     sf::RenderWindow menuWindow(sf::VideoMode(unsigned int(1280), unsigned int(720)), "Tetris Bieda Edition Menu", sf::Style::Close);
 
     //techno_font.loadFromFile("Dependencies\\Fonts\\Techno.otf");
     //techno_font.loadFromMemory(&Techno_otf, Techno_otf_len);
-
+    sf::Event menuEvent;
     while (menuWindow.isOpen())
     {
-        sf::Event menuEvent;
 
         //Obs³uga naciœniêæ odpwiednich klawiszy z klawiatury
         while (menuWindow.pollEvent(menuEvent))
@@ -475,8 +474,6 @@ void Game::endGame()
 void Game::displayControls()
 {
     srand(unsigned int(time(0)));
-
-
     techno_font.loadFromMemory(&Techno_otf, Techno_otf_len);
 
     sf::RenderWindow controlsWindow(sf::VideoMode(unsigned int(1280), unsigned int(720)), "Tetris Bieda Edition Controls", sf::Style::Close);
@@ -511,19 +508,9 @@ void Game::displayControls()
             }
         }
 
-
-        
-
-
-
         controlsWindow.clear(sf::Color(153, 204, 255));
         controlsWindow.draw(controlsText);
         controlsWindow.display();
 
-        
-
-
     }
-
-    controlsWindow.close();
 }

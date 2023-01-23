@@ -35,7 +35,7 @@ private:
 	void render();
 
 	// G³ówna pêtla otwartego okna
-	void openWindow();
+	void openMainWindow();
 
 	// Otworzenie pierwszego okna z wyborem poziomu trudnoœci
 	void menuSetup();
